@@ -1,34 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDoListVue</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <script src='js/vue.min.js'></script>
 </head>
+
 <body>
-    <div id="app">
-        <h1>代辦事項</h1>
-        <input type="text" placeholder="請輸入代辦內容"  @keyup.enter='addTodo(newTodo)' v-model='newTodo'>
-        <input type="checkbox" @click='allFinish()'>全部完成
-        <ul>
-            <h2>全部事項</h2>
-            <li v-for='todo in todos' :class='{ active : todo.completed }' >
-                <input type="checkbox" v-model='todo.completed'>
-                {{todo.content}} - <a href="#" @click.prevent='removeTodo(todo)'>刪除</a>
+    <div id="app" class='appBox'>
+        <div class="inputTitle">
+        <h1>TodoList</h1>
+        <a href="#" @click.parent="allFinish()" title='全部完成'>&#10004;</a>
+        <input type="text" placeholder="請輸入待辦內容" @keyup.enter='addTodo(newTodo)' v-model='newTodo' class='inputBox'>
+        <input type="button" value="確定" @click='addTodo(newTodo)'>
+        </div>
+        <div class="allList">
+            <ul>
+                <h2>全部事項</h2>
+                <li v-for='todo in todos' :class='{ active : todo.completed }'>
+                    <input type="checkbox" v-model='todo.completed'> {{todo.content}} - <a href="#" @click.prevent='removeTodo(todo)'>&#10005;</a>
                 </li>
-        </ul>
-        <ul>
-            <h2>未完成事項</h2>
-            <li  v-for='todo in todos' v-if='todo.completed == false'>{{todo.content}}</li>
-        </ul>
-        <ul>
-            <h2>完成事項</h2>
-            <li v-for='todo in todos' v-if='todo.completed == true'>{{todo.content}}</li>
-        </ul>
+            </ul>
+        </div>
+        <div class="undone" @click='show = !show'>
+            <ul>
+                <h2>未完成事項</h2>
+                <li v-for='todo in todos' v-if='todo.completed == false'>{{todo.content}}</li>
+            </ul>
+        </div>
+        <div class="done">
+            <ul>
+                <h2>完成事項</h2>
+                <li v-for='todo in todos' v-if='todo.completed == true'>{{todo.content}}</li>
+            </ul>
+
+        </div>
     </div>
     <script src='js/app.js'></script>
 </body>
+
 </html>
